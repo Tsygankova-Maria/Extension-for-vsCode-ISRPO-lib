@@ -1,0 +1,35 @@
+# Зависимости Node.js (загружаются через npm install)
+node_modules/
+jspm_packages/
+web_modules/
+
+# Результаты компиляции TypeScript (генерируются сборщиком esbuild)
+out/
+dist/
+
+# Скомпилированные бинарные файлы C++ ядра
+main
+main.exe
+critic
+critic.exe
+*.o
+*.obj
+*.out
+
+# Локальные пакеты расширений (готовые .vsix файлы)
+*.vsix
+
+# Скрытые логи среды разработки и операционной системы
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+
+# Временные папки macOS и Windows
+.DS_Store
+Thumbs.db
+
+# Конфигурации локальной отладки (опционально, чтобы препод видел только чистый код)
+.vscode/launch.json
+.vscode/tasks.json
