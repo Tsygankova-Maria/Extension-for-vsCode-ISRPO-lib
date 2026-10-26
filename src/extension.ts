@@ -3,11 +3,16 @@ import { exec } from 'child_process';
 import * as path from 'path';
 
 export function activate(context: vscode.ExtensionContext) {
-    // Эта строчка ОБЯЗАТЕЛЬНО должна появиться в Debug Console при старте хоста
     console.log('Расширение "Code Style Critic" успешно запущено и следит за стилем!');
 
     const saveEvent = vscode.workspace.onDidSaveTextDocument((document: vscode.TextDocument) => {
         const filePath = document.fileName;
+        
+        const fileExtension = path.extname(filePath).toLowerCase();
+        if (fileExtension !== '.cpp' && fileExtension !== '.c') {
+            console.log(`[CodeCritic] Пропуск: файл ${fileExtension} не относится к C/C++.`);
+            return;
+        }
         
         const isWindows = process.platform === 'win32';
         const binaryName = isWindows ? 'main.exe' : 'main';
@@ -34,9 +39,9 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             if (verdict.includes('завершена')) {
-                vscode.window.showInformationMessage(`CodeCritic: ${verdict}`);
+                vscode.window.showInformationMessage(`CodeCritic: ${verdict}`, { modal: true });
             } else {
-                vscode.window.showWarningMessage(`CodeCritic: ${verdict}`);
+                vscode.window.showWarningMessage(`CodeCritic: ${verdict}`, { modal: true });
             }
         });
     });
